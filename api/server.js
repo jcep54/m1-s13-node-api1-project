@@ -41,6 +41,23 @@ server.get('/api/users/:id', async(req,res)=>{
     }
 })
 
+server.post('/api/users', async (req,res) =>{
+    try{
+        
+        const { name, bio }= req.body
+        if(name && bio){
+            const addUser = await Model.insert({name,bio})
+            res.status(201).json(addUser)
+        }else{
+            res.status(400).json({ message: "Please provide name and bio for the user" })
+        }
+        
+        
+    }catch(err){
+        res.status(500).json({ message: "There was an error while saving the user to the database" })
+    }
+})
+
 
 
 
